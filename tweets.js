@@ -45,8 +45,7 @@ function printStatus (status) {
   console.log('[' + handle + '] ' + tweet);
 };
 
-// "Main"
-co(function *() {
+co(function *main () {
   var tweets = yield get6wTweets;
   tweets.forEach(printStatus);
 })();
