@@ -27,7 +27,7 @@ function *getToken () {
       },
       response = yield post(tokenUrl, options);
   return parse(response.body).access_token;
-};
+}
 
 function *get6wTweets () {
   let options = {
@@ -44,8 +44,8 @@ function printStatus (status) {
       handle = user.screen_name,
       tweet = status.text;
   console.log('[' + handle + '] ' + tweet);
-};
+}
 
 co(function *main () {
   (yield get6wTweets).forEach(printStatus);
-})();
+})()
