@@ -6,6 +6,7 @@ const env = process.env,
       request = require('request'),
       get = promisify(request.get),
       post = promisify(request.post),
+      parse = JSON.parse,
       appConsumerKey = env.KEY,
       appConsumerSecret = env.SECRET,
       tokenUrl = 'https://api.twitter.com/oauth2/token',
@@ -25,7 +26,7 @@ function *getToken () {
         }
       },
       response = yield post(tokenUrl, options);
-  return JSON.parse(response.body).access_token;
+  return parse(response.body).access_token;
 };
 
 function *get6wTweets () {
@@ -35,7 +36,7 @@ function *get6wTweets () {
         }
       },
       response = yield get(searchUrl, options);
-  return JSON.parse(response.body).statuses;
+  return parse(response.body).statuses;
 }
 
 function printStatus (status) {
@@ -46,6 +47,5 @@ function printStatus (status) {
 };
 
 co(function *main () {
-  var tweets = yield get6wTweets;
-  tweets.forEach(printStatus);
+  (yield get6wTweets).forEach(printStatus);
 })();
