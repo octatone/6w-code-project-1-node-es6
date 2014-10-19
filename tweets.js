@@ -31,7 +31,7 @@ function *getToken () {
 function *get6wTweets () {
   let options = {
         'auth': {
-          'bearer': yield getToken()
+          'bearer': yield getToken
         }
       },
       response = yield get(searchUrl, options);
@@ -47,6 +47,6 @@ function printStatus (status) {
 
 // "Main"
 co(function *() {
-  var tweets = yield get6wTweets();
+  var tweets = yield get6wTweets;
   tweets.forEach(printStatus);
 })();
