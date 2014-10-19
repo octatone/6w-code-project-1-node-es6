@@ -2,10 +2,10 @@
 
 const env = process.env,
       co = require('co'),
-      thunkify = require('thunkify'),
+      promisify = require('es6-promisify'),
       request = require('request'),
-      get = thunkify(request.get),
-      post = thunkify(request.post),
+      get = promisify(request.get),
+      post = promisify(request.post),
       appConsumerKey = env.KEY,
       appConsumerSecret = env.SECRET,
       tokenUrl = 'https://api.twitter.com/oauth2/token',
@@ -25,7 +25,7 @@ function *getToken () {
         }
       },
       response = yield post(tokenUrl, options);
-  return JSON.parse(response[1]).access_token;
+  return JSON.parse(response.body).access_token;
 };
 
 function *get6wTweets () {
@@ -35,7 +35,7 @@ function *get6wTweets () {
         }
       },
       response = yield get(searchUrl, options);
-  return JSON.parse(response[1]).statuses;
+  return JSON.parse(response.body).statuses;
 }
 
 function printStatus (status) {
